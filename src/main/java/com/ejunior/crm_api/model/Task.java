@@ -12,18 +12,18 @@ import lombok.Data;
 
 @Entity
 @Data
-public class Project {
+public class Task {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
-  private String name;
+  private String title;
   private String description;
 
   @Enumerated(EnumType.STRING)
-  private ProjectStatus status;
+  private TaskStatus status;
 
   @ManyToOne
-  @JoinColumn(name = "client_id")
-  private Client client;
+  @JoinColumn(name = "project_id")
+  private Project project;
 }

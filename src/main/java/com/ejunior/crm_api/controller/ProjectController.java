@@ -58,10 +58,11 @@ public class ProjectController {
     @PutMapping("/{id}")
     public ResponseEntity<Project> updateProject(@PathVariable Long id, @RequestBody Project projectDetails) {
         Optional<Project> optionalProject = projectService.findById(id);
-        if (optionalProject.isPresent()) {
+        if (optionalProject.isPresent()) { // AQUI! A variável correta é 'optionalProject'
             Project project = optionalProject.get();
             project.setName(projectDetails.getName());
             project.setDescription(projectDetails.getDescription());
+            project.setStatus(projectDetails.getStatus());
             Project updatedProject = projectService.save(project);
             return new ResponseEntity<>(updatedProject, HttpStatus.OK);
         } else {

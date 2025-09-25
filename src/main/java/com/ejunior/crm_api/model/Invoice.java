@@ -1,5 +1,8 @@
 package com.ejunior.crm_api.model;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -10,18 +13,19 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import lombok.Data;
 
-@Entity
 @Data
-public class Project {
+@Entity
+public class Invoice {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
-  private String name;
-  private String description;
+
+  private BigDecimal amount;
+  private LocalDate dueDate;
 
   @Enumerated(EnumType.STRING)
-  private ProjectStatus status;
+  private InvoiceStatus status;
 
   @ManyToOne
   @JoinColumn(name = "client_id")
