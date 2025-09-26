@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import jakarta.validation.Valid;
 
 import com.ejunior.crm_api.model.Client;
 import com.ejunior.crm_api.service.ClientService;
@@ -26,7 +27,7 @@ public class ClientController {
   private ClientService clientService;
 
     @PostMapping
-    public ResponseEntity<Client> createClient(@RequestBody Client client) {
+    public ResponseEntity<Client> createClient(@Valid @RequestBody Client client) {
     Client savedClient = clientService.save(client);
     return ResponseEntity.status(HttpStatus.CREATED).body(savedClient);
   }
@@ -45,7 +46,7 @@ public class ClientController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Client> updateClient(@PathVariable Long id, @RequestBody Client clientDetails) {
+    public ResponseEntity<Client> updateClient(@PathVariable Long id, @Valid @RequestBody Client clientDetails) {
         Optional<Client> optionalClient = clientService.findById(id);
         if (optionalClient.isPresent()) {
             Client client = optionalClient.get();
