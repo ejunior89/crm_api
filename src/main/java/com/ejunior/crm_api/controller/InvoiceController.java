@@ -31,14 +31,15 @@ public class InvoiceController {
   private ClientService clientService;
 
   @PostMapping
-  public ResponseEntity<Invoice> createInvoice(@RequestBody Invoice invoice) {
+public ResponseEntity<Invoice> createInvoice(@RequestBody Invoice invoice) {
     try {
-      Invoice savedInvoice = invoiceService.save(invoice);
-      return new ResponseEntity<>(savedInvoice, HttpStatus.CREATED);
+        Invoice savedInvoice = invoiceService.save(invoice);
+        return new ResponseEntity<>(savedInvoice, HttpStatus.CREATED);
     } catch (IllegalArgumentException e) {
-      return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        // Retorna um ResponseEntity com status BAD_REQUEST e sem corpo, evitando o erro de nulidade.
+        return ResponseEntity.badRequest().build();
     }
-  }
+}
 
   @GetMapping
   public ResponseEntity<List<Invoice>> getAllInvoices() {
@@ -68,7 +69,7 @@ public class InvoiceController {
         if (client.isPresent()) {
           invoice.setClient(client.get());
         } else {
-          return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+          return  ResponseEntity.badRequest().build();
         }
       }
 

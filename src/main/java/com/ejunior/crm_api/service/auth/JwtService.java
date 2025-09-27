@@ -44,7 +44,7 @@ public class JwtService {
                 .getPayload();
     }
 
-    private Boolean isTokenExpired(String token) {
+    public Boolean isTokenExpired(String token) {
         return extractExpiration(token).before(new Date());
     }
 
@@ -71,5 +71,10 @@ public class JwtService {
     private SecretKey getSignKey() {
         byte[] keyBytes = Decoders.BASE64.decode(secret);
         return Keys.hmacShaKeyFor(keyBytes);
+    }
+
+    public boolean isTokenExpired(String token, UserDetails userDetails) {
+      // TODO Auto-generated method stub
+      throw new UnsupportedOperationException("Unimplemented method 'isTokenExpired'");
     }
 }

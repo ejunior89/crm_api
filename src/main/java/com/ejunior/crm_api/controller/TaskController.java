@@ -36,7 +36,7 @@ public class TaskController {
       Task savedTask = taskService.save(task);
       return new ResponseEntity<>(savedTask, HttpStatus.CREATED);
     } catch (IllegalArgumentException e) {
-      return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+      return ResponseEntity.badRequest().build();
     }
   }
 
@@ -54,30 +54,30 @@ public class TaskController {
   }
 
   @PutMapping("/{id}")
-  public ResponseEntity<Task> updateTask(@PathVariable Long id, @RequestBody Task taskDetails) {
+public ResponseEntity<Task> updateTask(@PathVariable Long id, @RequestBody Task taskDetails) {
     Optional<Task> optionalTask = taskService.findById(id);
     if (optionalTask.isPresent()) {
-      Task task = optionalTask.get();
-      task.setTitle(taskDetails.getTitle());
-      task.setDescription(taskDetails.getDescription());
-      task.setStatus(taskDetails.getStatus());
+        Task task = optionalTask.get();
+        task.setTitle(taskDetails.getTitle());
+        task.setDescription(taskDetails.getDescription());
+        task.setStatus(taskDetails.getStatus());
 
-      // Valida o projeto, caso tenha sido enviado no corpo
-      if (taskDetails.getProject() != null && taskDetails.getProject().getId() != null) {
-        Optional<Project> project = projectService.findById(taskDetails.getProject().getId());
-        if (project.isPresent()) {
-          task.setProject(project.get());
-        } else {
-          return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        // Valida o projeto, caso tenha sido enviado no corpo
+        if (taskDetails.getProject() != null && taskDetails.getProject().getId() != null) {
+            Optional<Project> project = projectService.findById(taskDetails.getProject().getId());
+            if (project.isPresent()) {
+                task.setProject(project.get());
+            } else {
+                return ResponseEntity.badRequest().build(); 
+            }
         }
-      }
 
-      Task updatedTask = taskService.save(task);
-      return new ResponseEntity<>(updatedTask, HttpStatus.OK);
+        Task updatedTask = taskService.save(task);
+        return new ResponseEntity<>(updatedTask, HttpStatus.OK);
     } else {
-      return ResponseEntity.notFound().build();
+        return ResponseEntity.notFound().build();
     }
-  }
+}
 
   @DeleteMapping("/{id}")
   public ResponseEntity<Void> deleteTask(@PathVariable Long id) {
