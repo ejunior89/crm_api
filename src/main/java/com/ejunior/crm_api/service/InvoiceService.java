@@ -7,7 +7,12 @@ import com.ejunior.crm_api.model.Invoice;
 
 public interface InvoiceService {
   Invoice save(Invoice invoice);
+
   List<Invoice> findAll();
+
   Optional<Invoice> findById(Long id);
+
+  Invoice update(Long id, Invoice invoice);
+
   void deleteById(Long id);
 }

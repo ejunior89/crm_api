@@ -33,6 +33,19 @@ public class ProjectServiceImpl implements ProjectService {
   }
 
   @Override
+  public Project update(Long id, Project projectDetails) {
+    return projectRepository.findById(id)
+        .map(project -> {
+          project.setName(projectDetails.getName());
+          project.setDescription(projectDetails.getDescription());
+          project.setStatus(projectDetails.getStatus());
+          // Client is usually not updated here, but if needed, logic should be added
+          return projectRepository.save(project);
+        })
+        .orElseThrow(() -> new RuntimeException("Project not found with id " + id));
+  }
+
+  @Override
   public void deleteById(Long id) {
     projectRepository.deleteById(id);
   }

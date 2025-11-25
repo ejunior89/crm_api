@@ -7,7 +7,12 @@ import com.ejunior.crm_api.model.Task;
 
 public interface TaskService {
   Task save(Task task);
+
   List<Task> findAll();
+
   Optional<Task> findById(Long id);
+
+  Task update(Long id, Task task);
+
   void deleteById(Long id);
 }

@@ -7,7 +7,12 @@ import com.ejunior.crm_api.model.Client;
 
 public interface ClientService {
   Client save(Client client);
+
   List<Client> findAll();
+
   Optional<Client> findById(Long id);
+
+  Client update(Long id, Client client);
+
   void deleteById(Long id);
 }

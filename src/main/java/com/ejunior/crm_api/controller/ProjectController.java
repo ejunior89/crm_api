@@ -3,7 +3,6 @@ package com.ejunior.crm_api.controller;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -24,11 +23,13 @@ import com.ejunior.crm_api.service.ProjectService;
 @RequestMapping("/api/projects")
 public class ProjectController {
 
-    @Autowired
-    private ProjectService projectService;
+    private final ProjectService projectService;
+    private final ClientService clientService;
 
-    @Autowired
-    private ClientService clientService;
+    public ProjectController(ProjectService projectService, ClientService clientService) {
+        this.projectService = projectService;
+        this.clientService = clientService;
+    }
 
     @PostMapping
     public ResponseEntity<Project> createProject(@RequestBody Project project) {
